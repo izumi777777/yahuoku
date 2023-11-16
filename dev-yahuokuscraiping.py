@@ -2,8 +2,7 @@
 # ライブラリの宣言スペース
 # ========================================================
 import os  # ファイル操作用
-import openpyxl  # Excel操作用
-import time
+import time # time.sleep()のために必要
 import requests  # Webサイト情報の取得用
 from bs4 import BeautifulSoup  # Webサイト情報の取得用
 
@@ -12,7 +11,7 @@ from bs4 import BeautifulSoup  # Webサイト情報の取得用
 # ========================================================
 # 取得したい相場のURLを入力する
 # base_url = input("相場を取得したヤフオクのURLを入力してください: ")
-base_url = "https://auctions.yahoo.co.jp/closedsearch/closedsearch?va=ONKYO+T-405&b=1&n=100&auccat=&tab_ex=commerce&ei=utf-8&aq=-1&oq=&sc_i=&exflg=&p=ONKYO+FR-N7&x=0&y=0"
+base_url = "https://auctions.yahoo.co.jp/closedsearch/closedsearch?va=ONKYO+FR-N7&b=1&n=100&auccat=&tab_ex=commerce&ei=utf-8&aq=-1&oq=&sc_i=&exflg=&p=ONKYO+FR-&x=0&y=0"
 print("1回目のURL : " + base_url)
 
 # ========================================================
@@ -54,6 +53,9 @@ if a_element:
         # 最後の要素以外を取得
         if index < len(href_elements):
             urls_to_parse.append(href_value)
+            
+            # サーバへの負担を減らすために一時停止
+            time.sleep(3)
 
     # 取得したURLを順番に解析
     for index, url in enumerate(urls_to_parse, start=1):
