@@ -55,11 +55,13 @@ if a_element:
             urls_to_parse.append(href_value)
             
             # サーバへの負担を減らすために一時停止
-            time.sleep(3)
+            time.sleep(2)
 
     # 取得したURLを順番に解析
     for index, url in enumerate(urls_to_parse, start=1):
         print(f"{index}回目の解析開始: {url}")
+        # サーバへの負担を減らすために一時停止
+        time.sleep(2)
         # URLのHTMLを取得
         response = requests.get(url)
         html = response.text
