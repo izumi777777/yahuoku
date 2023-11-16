@@ -13,7 +13,9 @@ html_string = '<a class="Pager__link" data-cl-params="_cl_vmodule:pagination;_cl
 # HTMLエンティティをデコード
 html_decoded = html.unescape(html_string)
 
+# HTMLをパース
 soup = BeautifulSoup(html_decoded, 'html.parser')
+print(soup)
 
 # aタグを検索し、href属性の値を取得
 a_element = soup.find('a', class_='Pager__link')
