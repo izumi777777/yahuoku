@@ -21,4 +21,4 @@ print(soup)
 a_element = soup.find('a', class_='Pager__link')
 if a_element:
     href_value = a_element['href']
-    print(href_value)
+    print("取得したURL: " + href_value)
