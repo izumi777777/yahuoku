@@ -1,0 +1,6 @@
+Flask==1.1.4
+requests
+# boto3
+beautifulsoup4
+openpyxl
+markupsafe==1.1.1

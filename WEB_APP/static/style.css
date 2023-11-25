@@ -1,0 +1,59 @@
+body {
+    /* //ブラウザ固有の余白を消します。 */
+    margin: 0;  
+    padding: 0;
+    /* 余白のとりかたを指定。 */
+    box-sizing: border-box;
+    /* //表示画面の大きさを決めます。 */
+    width: 100vw;
+    height: 100vh;
+  }
+  
+  .container {
+    /* 背景色 */
+    background-color: black;
+    /* 横幅を画面いっぱいに指定 */
+    width: 100%;
+    /* 縦幅を・・・同上 */
+    height: 100%;
+    /* flexBoxでレイアウト制御します。 */
+    display: flex;
+    /* 左右中央に指定 */
+    justify-content: center;
+    /* 上下中央に指定 */
+    align-items: center;
+    /* ぐるぐると文字を縦並びにする指定 */
+    flex-direction: column;
+  }
+
+  .loader {
+    /* 12pxの白い四角をつくります */
+    border: 12px solid #fafafa;
+    /* 作った四角の角を丸めます */
+    border-radius: 50%;
+    border-top: 12px solid #3498db;
+    /* ぐるぐるの大きさを決めます */
+    width: 100px;
+    /* ぐるぐるの大きさを決めます */
+    height: 100px;
+    /* アニメーションの設定 */
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin{
+    0%{
+      /* アニメーション開始時にどういう状態か？   */
+      transform: rotate(0deg);
+    }
+  
+    100%{
+      /* アニメーション終了時にどういう状態か？ */
+      transform: rotate(360deg);
+    }
+  }
+  
+  p{
+    /* これはNow loading...の色指定なのでぐるぐるとはあまり関係ない */
+    color: #fafafa;
+  }
+  

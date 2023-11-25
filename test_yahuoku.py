@@ -9,8 +9,9 @@ from openpyxl import Workbook # Excel操作用
 # 静的解析対象Webサイトの初期URLを宣言
 # ========================================================
 # 取得したいヤフオクの落札相場のURLを入力する
-# base_url = input("落札相場を取得したいヤフオクのURLを入力してください: ")
-base_url = "https://auctions.yahoo.co.jp/closedsearch/closedsearch?p=ONKYO+FR-N7EX&va=ONKYO+FR-N7EX&b=1&n=100"
+keyword = input("落札相場を取得したいキーワードを入力してください: ")
+base_url = 'https://auctions.yahoo.co.jp/closedsearch/closedsearch?p=' + keyword + '&n=100';
+print(base_url)
 print("1回目のURL : " + base_url)
 
 # ========================================================
@@ -102,6 +103,37 @@ while count < url_count:
             sheet.append([date_only, name, price, link])
             time.sleep(1)
         # Excelファイルを保存する
-        wb.save("test_onkyofrn7ex_yahuokulist.xlsx")
-        
+        # 変数にファイル名を格納
+        print(keyword)
+        keyword = keyword.replace(" ", "_").replace("　", "_")
+        print(keyword)
+        file_name = f"{keyword}_test_yahuokulist.xlsx"
+        wb.save(file_name)
+        print(file_name)
 print("Excelファイルの保存が完了しました")
+
+# ========================================================
+# 作成したエクセルファイルをS3に転送
+# ========================================================
+
+# AWS Systems Managerのクライアントの作成
+ssm = boto3.client('ssm')
+
+# パラメーターストアからアクセスキーとシークレットキーを取得
+access_key_parameter = ssm.get_parameter(Name='AuctionScraping-access_key', WithDecryption=True)
+secret_key_parameter = ssm.get_parameter(Name='AuctionScraping-secret_key', WithDecryption=True)
+    
+aws_access_key_id = access_key_parameter['Parameter']['Value']
+aws_secret_access_key = secret_key_parameter['Parameter']['Value']
+
+# S3クライアントの作成
+s3 = boto3.client('s3', aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
+
+# アップロード先のファイルパス
+s3_path = '2023/11/'  # 任意のS3内のパス
+s3_filepath = s3_path + file_name
+
+# AWS S3にアップロード
+bucket_name = 'yahuoku-scraping-files'
+s3.upload_file(file_name, bucket_name, s3_filepath)
+print("S3にファイルのアップロードが完了しました")

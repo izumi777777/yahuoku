@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- head部分は省略 -->
+    <!-- レスポンシブ対応のおまじない -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- タイトル -->
+    <title>ヤフオク相場検索システム</title>
+    <!-- css読み込みの宣言 -->
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <style>
+        /* 既存のスタイルは省略 */
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        label {
+            margin-bottom: 10px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .submit-button-container {
+            width: 100%;
+            text-align: right; /* 右寄せにする */
+        }
+        input[type="submit"] {
+            width: 20%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .container {
+            background-color: white;
+            width: 100%;
+            height: 100%;
+            /* flexBoxでレイアウト制御します。 */
+            display: none; /* 最初は非表示 */
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .loader {
+            /* 12pxの白い四角をつくります */
+            border: 15px solid Black;
+            /* 作った四角の角を丸めます */
+            border-radius: 50%;
+            border-top: 12px solid #3498db;
+            /* ぐるぐるの大きさを決めます */
+            width: 100px;
+            /* ぐるぐるの大きさを決めます */
+            height: 100px;
+            /* アニメーションの設定 */
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                /* アニメーション開始時にどういう状態か？   */
+                transform: rotate(0deg);
+                /* 透明度 */
+                opacity: 1;
+            }
+
+            50% {
+                transform: rotate(180deg);
+                border-radius: 0%;
+                width: 20px;
+                height: 20px;
+                border: 5px double #061fd5;
+            }
+
+            100% {
+            /* アニメーション終了時にどういう状態か？ */
+            transform: rotate(360deg);
+            }
+        }
+
+        p {
+            /* これはNow loading...の色指定なのでぐるぐるとはあまり関係ない */
+            color: #fafafa;
+        }
+
+        .loading-visible .container {
+            /* 表示状態のときのスタイル */
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+    <h1>ヤフオク!相場検索システム</h1>
+    <form action="/search" method="post" class="loading-visible" onsubmit="showLoading()">
+        <!-- <label for="keyword">検索したいキーワードを入力してください：</label> -->
+        <input type="text" id="keyword" name="keyword" placeholder="検索したいキーワードを入力してください" required>
+        <div class="submit-button-container">
+            <input type="submit" value="検索">
+        </div>
+    </form>
+    <!-- 背景 -->
+    <div class="container" id="loadingContainer">
+        <!-- 例のぐるぐる -->
+        <div class="loader"></div>
+        <!-- ぐるぐる下の文字 -->
+        <p>Now loading...</p>
+    </div>
+    <script>
+        function showLoading() {
+            // 検索ボタンが押されたときにローディングを表示
+            document.getElementById('loadingContainer').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
