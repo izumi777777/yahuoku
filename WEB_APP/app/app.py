@@ -4,7 +4,6 @@
 from flask import Flask, render_template, request, jsonify, Response
 import os
 import time
-# import boto3
 import csv
 import requests
 from io import StringIO
@@ -147,36 +146,6 @@ def search():
             print(file_name)
     print("Excelファイルの保存が完了しました")
 
-# ========================================================
-# 作成したエクセルファイルをS3に転送
-# ========================================================
-
-    # # AWS Systems Managerのクライアントの作成
-    # ssm = boto3.client('ssm')
-
-    # # パラメーターストアからアクセスキーとシークレットキーを取得
-    # access_key_parameter = ssm.get_parameter(Name='AuctionScraping-access_key', WithDecryption=True)
-    # secret_key_parameter = ssm.get_parameter(Name='AuctionScraping-secret_key', WithDecryption=True)
-    
-    # aws_access_key_id = access_key_parameter['Parameter']['Value']
-    # aws_secret_access_key = secret_key_parameter['Parameter']['Value']
-
-    # # S3クライアントの作成
-    # s3 = boto3.client('s3', aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
-
-    # # アップロード先のファイルパス
-    # s3_path = '2023/11/'  # 任意のS3内のパス
-    # s3_filepath = s3_path + file_name
-
-    # # AWS S3にアップロード
-    # bucket_name = 'yahuoku-scraping-files'
-    # s3.upload_file(file_name, bucket_name, s3_filepath)
-    # print("S3にファイルのアップロードが完了しました")
-
-    # ... （上記のPythonスクリプト全体）
-
-    
-    
     # 商品情報を結果ページに渡す
     return render_template('result.html', keyword=keyword, items=products_info)
 
